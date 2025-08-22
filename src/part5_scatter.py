@@ -5,11 +5,24 @@ PART 5: SCATTER PLOTS
 - All plots should be output as PNG files to `data/part5_plots`
 '''
 
-# 1. Using lmplot, create a scatter plot where the x-axis is the prediction for felony and the y-axis the is prediction for a nonfelony, and hue this by whether the current charge is a felony. 
-# 
-# In a print statement, answer the following question: What can you say about the group of dots on the right side of the plot?
+import seaborn as sns
+import matplotlib.pyplot as plt
 
+def scatter_felony_vs_nonfelony(pred_universe_with_felony):
+    g1 = sns.lmplot(data=pred_universe_with_felony,
+                    x='prediction_felony',
+                    y='prediction_nonfelony',
+                    hue='has_felony_charge',
+                    fit_reg=False)
+    g1.savefig('./data/part5_plots/scatter_felony_vs_nonfelony.png', bbox_inches='tight')
+    plt.close(g1.fig)
+    print("Dots on the right show individuals with high predicted felony risk, typically those with current felony charges.")
 
-# 2. Create a scatterplot where the x-axis is prediction for felony rearrest and the y-axis is whether someone was actually rearrested.
-# 
-# In a print statement, answer the following question: Would you say based off of this plot if the model is calibrated or not?
+def scatter_felony_vs_rearrest(pred_universe_with_felony):
+    g2 = sns.lmplot(data=pred_universe_with_felony,
+                    x='prediction_felony',
+                    y='rearrest_felony',
+                    fit_reg=False)
+    g2.savefig('./data/part5_plots/scatter_felony_vs_rearrest.png', bbox_inches='tight')
+    plt.close(g2.fig)
+    print("The plot shows calibration issues: predicted probabilities don’t align perfectly with actual rearrests.")
