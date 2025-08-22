@@ -38,3 +38,18 @@ def extract_transform():
     charge_counts_by_offense = arrest_events.groupby(['charge_degree', 'offense_category']).size().reset_index(name='count')
     
     return pred_universe, arrest_events, charge_counts, charge_counts_by_offense
+    def extract_transform():
+    pred_universe = pd.read_csv('https://www.dropbox.com/scl/fi/a2tpqpvkdc8n6advvkpt7/universe_lab9.csv?rlkey=839vsc25njgfftzakr34w2070&dl=1')
+    arrest_events = pd.read_csv('https://www.dropbox.com/scl/fi/n47jt4va049gh2o4bysjm/arrest_events_lab9.csv?rlkey=u66usya2xjgf8gk2acq7afk7m&dl=1')
+
+    charge_counts = arrest_events.groupby(['charge_degree']).size().reset_index(name='count')
+    charge_counts_by_offense = arrest_events.groupby(['charge_degree', 'offense_category']).size().reset_index(name='count')
+
+    felony_charge = arrest_events.groupby('arrest_id').apply(
+        lambda df: pd.Series({'has_felony_charge': (df['charge_degree'] == 'F').any()})
+    ).reset_index()
+
+    pred_universe_with_felony = pred_universe.merge(felony_charge, on='arrest_id', how='left')
+
+    return pred_universe, arrest_events, charge_counts, charge_counts_by_offense, pred_universe_with_felony
+
