@@ -5,19 +5,26 @@ PART 3: BAR PLOTS AND HISTOGRAMS
 - All plots should be output as PNG files to `data/part3_plots`
 '''
 
-# 1. Using the pre_universe data frame, create a bar plot for the fta column.
+import seaborn as sns
+import matplotlib.pyplot as plt
 
+def bar_fta(pred_universe):
+    sns.countplot(data=pred_universe, x='fta')
+    plt.savefig('./data/part3_plots/fta_bar.png', bbox_inches='tight')
+    plt.clf()
 
+def bar_fta_by_sex(pred_universe):
+    sns.countplot(data=pred_universe, x='fta', hue='sex')
+    plt.savefig('./data/part3_plots/fta_bar_by_sex.png', bbox_inches='tight')
+    plt.clf()
 
-# 2. Hue the previous barplot by sex
+def hist_age(pred_universe):
+    sns.histplot(data=pred_universe, x='age_at_arrest')
+    plt.savefig('./data/part3_plots/age_hist.png', bbox_inches='tight')
+    plt.clf()
 
-
-
-# 3. Plot a histogram of age_at_arrest
-
-
-# 4. Plot the same histogram, but create bins that represent the following age groups 
-#  - 18 to 21
-#  - 21 to 30
-#  - 30 to 40
-#  - 40 to 100 
+def hist_age_grouped(pred_universe):
+    bins = [18, 21, 30, 40, 100]
+    sns.histplot(data=pred_universe, x='age_at_arrest', bins=bins)
+    plt.savefig('./data/part3_plots/age_hist_grouped.png', bbox_inches='tight')
+    plt.clf()
