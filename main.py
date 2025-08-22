@@ -40,9 +40,9 @@ def main():
     part4.catplot_felony_with_outcome(pred_universe_with_felony)
 
     ##  PART 5: SCATTERPLOTS  ##
-    # 1
-    
-    # 2
+    part5.scatter_felony_vs_nonfelony(pred_universe_with_felony)
+    part5.scatter_felony_vs_rearrest(pred_universe_with_felony)
+
 
 
 if __name__ == "__main__":
